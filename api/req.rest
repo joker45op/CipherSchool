@@ -1,0 +1,58 @@
+
+GET http://localhost:3001/videos
+
+###
+
+POST http://localhost:3001/videos/add
+Content-Type: application/json
+
+{
+    "title":"First Video over here!",
+    "url":".videos/sec.mp4"
+}
+
+###
+
+POST http://localhost:3001/videos/640b07b70125c303fc622fda/like
+Content-Type: application/json
+
+{
+  "liked": true
+}
+
+###
+
+POST http://localhost:3001/videos/640b07b70125c303fc622fda/views
+Content-Type: application/json
+
+{
+    "views": true
+}
+
+###
+
+POST http://localhost:3001/videos/640b07b70125c303fc622fda/comments
+Content-Type: application/json
+
+###
+
+POST http://localhost:3001/videos/640b07b70125c303fc622fda/comments/add
+Content-Type: application/json
+
+{
+    "comment": "My 3rd comments"
+}
+
+###
+DELETE http://localhost:3001/videos/640b07b70125c303fc622fda/comments/640b15370682fe0808590c20
+
+###
+
+POST http://localhost:3001/videos/640b07b70125c303fc622fda/comments/640b1a6dbfc2fe089cd705d2/reply/add
+Content-Type: application/json
+
+{
+    "reply": "one more test"
+}
+
+###
