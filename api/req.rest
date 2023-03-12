@@ -1,19 +1,24 @@
 
-GET http://localhost:3001/videos
+GET http://localhost:3001/api/videos
 
 ###
 
-POST http://localhost:3001/videos/add
+POST http://localhost:3001/api/videos/add
 Content-Type: application/json
 
 {
-    "title":"First Video over here!",
-    "url":".videos/sec.mp4"
+    "title":"first Video over here!",
+    "url":"first.mp4",
+    "thumb" : "first.png"
 }
 
 ###
 
-POST http://localhost:3001/videos/640b07b70125c303fc622fda/like
+DELETE http://localhost:3001/api/videos/640d7c1ec132a60258d7d6eb
+
+###
+
+POST http://localhost:3001/api/videos/640b07b70125c303fc622fda/like
 Content-Type: application/json
 
 {
@@ -22,7 +27,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3001/videos/640b07b70125c303fc622fda/views
+POST http://localhost:3001/api/videos/640b07b70125c303fc622fda/views
 Content-Type: application/json
 
 {
@@ -31,24 +36,24 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3001/videos/640b07b70125c303fc622fda/comments
+POST http://localhost:3001/api/videos/640d7dafc132a60258d7d6ec/comments
 Content-Type: application/json
 
 ###
 
-POST http://localhost:3001/videos/640b07b70125c303fc622fda/comments/add
+POST http://localhost:3001/api/videos/640d7dafc132a60258d7d6ec/comments/add
 Content-Type: application/json
 
 {
-    "comment": "My 3rd comments"
+    "comment": "My 1st comments"
 }
 
 ###
-DELETE http://localhost:3001/videos/640b07b70125c303fc622fda/comments/640b15370682fe0808590c20
+DELETE http://localhost:3001/api/videos/640b07b70125c303fc622fda/comments/640b15370682fe0808590c20
 
 ###
 
-POST http://localhost:3001/videos/640b07b70125c303fc622fda/comments/640b1a6dbfc2fe089cd705d2/reply/add
+POST http://localhost:3001/api/videos/640b07b70125c303fc622fda/comments/640b1a6dbfc2fe089cd705d2/reply/add
 Content-Type: application/json
 
 {

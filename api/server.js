@@ -24,7 +24,9 @@ mongoose
 // const video = sch.Video;
 const { Video, Comment } = require("./models/Schemas");
 
-app.get("/videos", async (req, res) => {
+app.use('/videos', express.static('public/videos'));
+
+app.get("/api/videos", async (req, res) => {
   try {
     const videos = await Video.find();
     res.status(200).json(videos);
@@ -33,13 +35,13 @@ app.get("/videos", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
-
-app.post("/videos/add", (req, res) => {
+app.post("/api/videos/add", (req, res) => {
   try {
-    const { title, url } = req.body;
+    const { title, url, thumb } = req.body;
     const _video = new Video({
       title: title,
-      videoUrl: url
+      videoUrl: url,
+      thumb: thumb
     })
     _video.save()
     res.status(200).json({ message: "Video added successfully" });
@@ -48,9 +50,20 @@ app.post("/videos/add", (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
-
-
-app.post('/videos/:id/like', async (req, res) => {
+app.delete('/api/videos/:vid', async (req, res) => {
+  try {
+    const video = await Video.findById(req.params.vid);
+    if (!video) {
+      return res.status(404).send('Video not found');
+    }
+    await Video.deleteOne({ _id: video._id });
+    res.status(200).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+});
+app.post('/api/videos/:id/like', async (req, res) => {
   try {
     const video = await Video.findById(req.params.id);
     if (!video) {
@@ -64,9 +77,7 @@ app.post('/videos/:id/like', async (req, res) => {
     res.status(500);
   }
 });
-
-
-app.post('/videos/:id/views', async (req, res) => {
+app.post('/api/videos/:id/views', async (req, res) => {
   try {
     const video = await Video.findById(req.params.id);
     if (!video) {
@@ -80,10 +91,7 @@ app.post('/videos/:id/views', async (req, res) => {
     return res.status(500).send();
   }
 });
-
-
-
-app.post('/videos/:id/comments/add', async (req, res) => {
+app.post('/api/videos/:id/comments/add', async (req, res) => {
   try {
     const videoId = req.params.id;
     const video = await Video.findById(videoId);
@@ -104,8 +112,7 @@ app.post('/videos/:id/comments/add', async (req, res) => {
     res.status(500).send();
   }
 });
-
-app.post("/videos/:id/comments", async (req, res) => {
+app.post("/api/videos/:id/comments", async (req, res) => {
   try {
     const videoId = req.params.id;
     // const video = await Video.findById(videoId).populate('comments');
@@ -130,10 +137,7 @@ app.post("/videos/:id/comments", async (req, res) => {
     res.status(500).send()
   }
 })
-
-
-
-app.delete('/videos/:vid/comments/:id', async (req, res) => {
+app.delete('/api/videos/:vid/comments/:id', async (req, res) => {
   try {
     const video = await Video.findById(req.params.vid);
     const comment = await Video.findById(req.params.id);
@@ -151,9 +155,7 @@ app.delete('/videos/:vid/comments/:id', async (req, res) => {
     res.status(500).send();
   }
 });
-
-
-app.post('/videos/:vid/comments/:id/reply/add', async (req, res) => {
+app.post('/api/videos/:vid/comments/:id/reply/add', async (req, res) => {
   try {
     const video = await Video.findById(req.params.vid);
     const comment = await Comment.findById(req.params.id);

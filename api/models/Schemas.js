@@ -11,6 +11,7 @@ const userSchema = new Schema({
 const videoSchema = new Schema({
   title: { type: String, required: true },
   videoUrl: { type: String, required: true },
+  thumb: { type: String, required: true },
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
@@ -29,4 +30,4 @@ const Comment = mongoose.model("Comment", commentSchema);
 // const Reply = mongoose.model("Reply", replySchema);
 
 // module.exports = { User, Video, Comment};
-module.exports = { Video,Comment};
+module.exports = { Video, Comment };
